@@ -1,0 +1,15 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}WalletX{% endblock %}</title>
+
+    <link href="{% static 'wallet/style.css' %}" rel="stylesheet" />
+    {% block script %} {% endblock %}
+  </head>
+  <body>
+    <div class="container">{% block body %} {% endblock %}</div>
+  </body>
+</html>

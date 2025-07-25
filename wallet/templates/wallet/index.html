@@ -1,0 +1,21 @@
+{% extends "wallet/layout.html" %} {% load static %} {% block body %}
+<!-- wallet body -->
+<div id="black-overlay"></div>
+
+<div class="transition-container">
+  <img src="{% static 'wallet/flower.png' %}" class="flower" id="flower" />
+
+  <div class="text-container">
+    <h1 id="main-text">Wallet<span>X</span></h1>
+    <p id="sub-text">Choose one to get started</p>
+  </div>
+  <div class="button-row">
+    <button data-id="sol">Solana</button>
+    <button data-id="eth">Etherreum</button>
+    <button data-id="soldev">Solana-Devnet (fake crypto)</button>
+  </div>
+</div>
+
+{% endblock %} {% block script %}
+<script src="{% static 'wallet/script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,217 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  font-family: "Inter", Arial, sans-serif;
+  color: #fff;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+.transition-container {
+  margin-top: 23%;
+}
+.text-container {
+  margin-left: 100px;
+  /* z-index: 2; */
+  text-align: left;
+}
+#main-text {
+  z-index: 2;
+  font-size: 85px;
+  font-weight: 800;
+  color: #786aff;
+  margin-bottom: 0.2em;
+  letter-spacing: -2px;
+  line-height: 1.1;
+}
+#main-text span {
+  color: #fff;
+  margin-left: 2px;
+}
+#sub-text,
+#new-sub-text {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 0 0;
+  color: #fff;
+}
+#new-sub-text.hidden {
+  display: none;
+}
+
+.button-row {
+  z-index: 2;
+  margin-left: 90px;
+  margin-top: 5px;
+}
+
+.button-row > button {
+  background: #28223b;
+  color: #d1c4df;
+  padding: 0.85em 2em;
+  border-radius: 13px;
+  border: none;
+  font-size: 1.08rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.35em;
+  box-shadow: 0 2px 16px 0 #14112670;
+  transition: background 0.18s, color 0.18s;
+}
+.button-row > button:hover {
+  background: #483f7a;
+  color: #fff;
+}
+.flower {
+  position: absolute;
+  right: -3vw;
+  top: 30%;
+  transform: translateY(-50%);
+  width: 50vw;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: center center;
+}
+@media (max-width: 950px) {
+  .flower {
+    width: 60vw !important;
+    min-width: 180px;
+    right: -2vw;
+  }
+  .text-container {
+    left: 3vw;
+    top: 32%;
+  }
+}
+@media (max-width: 700px) {
+  .transition-container {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: 100vh;
+  }
+  .flower {
+    width: 78vw !important;
+    min-width: 100px;
+    right: -7vw;
+    top: 64%;
+    transform: translateY(-50%);
+  }
+  .text-container {
+    left: 5vw;
+    top: 10vh;
+    transform: none;
+  }
+  #main-text {
+    font-size: 3rem;
+  }
+  .text-container {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  .button-row {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+  .button-row > button {
+    padding: 0.6em 1.5em;
+    border-radius: 13px;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+}
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes rotateClockwise {
+  from {
+    opacity: 0.8;
+    transform: rotate(0deg);
+  }
+  to {
+    opacity: 0.4;
+    transform: rotate(80deg);
+  }
+}
+
+/* Initial states for animation */
+.text-container,
+.button-row,
+.flower {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+/* Animated classes */
+.text-animated {
+  animation: fadeInUp 1.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+.button-animated {
+  animation: fadeInUp 1.2s cubic-bezier(0.23, 0.92, 0.16, 1) forwards;
+  animation-delay: 0.3s;
+}
+.flower-animated {
+  animation: fadeInRight 1.3s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  animation-delay: 0.3s;
+}
+.text-hide {
+  animation: fadeInDown 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) backwards;
+}
+.button-hide {
+  animation: fadeInDown 0.6s cubic-bezier(0.23, 0.92, 0.16, 1) backwards;
+}
+.flower-rotate {
+  animation: rotateClockwise 0.8s linear forwards;
+}
+
+#black-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  z-index: 9999;
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 0.5s cubic-bezier(0.6, 0.2, 0.23, 0.98);
+}
+#black-overlay.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+.hidden {
+  display: none;
+}
+.scrt-phrase {
+  font-size: 45px !important;
+}
