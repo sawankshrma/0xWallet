@@ -30,19 +30,48 @@ document.addEventListener("DOMContentLoaded", function () {
           seed.innerHTML = `
             <div class="text-container">
             <h1 id="main-text" class="scrt-phrase">Secret Recovery Phrase</h1>
-            <p id="sub-text">Save these words in a safe place</p>
-            </div>
+            <p id="sub-text" class="safe-place">Save these words in a safe place</p>
+            <div class="button-row input-row">
+              <input class="seed-input" 
+              placeholder="Enter your Secret Phrase (or leave blank to generate)"
+              type="password"
+            />
+              <button class="new-btn">Generate Wallet</button>
 
-            <form></form>
+            </div>
+            </div>
         `;
 
           document.querySelector(".transition-container")?.appendChild(seed);
-          console.log(seed);
+          // console.log(seed);
 
           const newText = seed.querySelector(".text-container");
           newText?.classList.add("text-animated");
+          const newBtn = seed.querySelector(".button-row");
+          newBtn?.classList.add("button-animated");
         }, 1);
       }, 400);
     }
   });
 });
+
+async function getMnemonic() {
+  const res = await fetch("http://localhost:3001/generate");
+  const data = await res.json();
+  localStorage.setItem("mnemonic", data.mnemonic);
+  console.log("Mnemonic:", data.mnemonic);
+}
+
+async function getWallet(mnemonic) {
+  const res = await fetch("http://localhost:3001/wallet", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ mnemonic }),
+  });
+
+  const data = await res.json();
+  console.log(data);
+  console.log(`secretKey= ${data.secretKey}`);
+}
