@@ -129,7 +129,6 @@ body {
   position: absolute;
   right: -3vw;
   top: 30%;
-  transform: translateY(-50%);
   width: 50vw;
   z-index: -1;
   pointer-events: none;
@@ -151,22 +150,74 @@ body {
   }
 }
 @media (max-width: 700px) {
+body{
+  padding-top: 15px !important;
+}
+.text-container * {
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+
+.transition-container {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+.transition-container * {
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+
+ form {
+
+    padding-left: 0px !important;
+    display: block;
+    width: 94vw;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 0px !important;
+    box-sizing: border-box !important;
+}
+
   .transition-container {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     min-height: 100vh;
   }
-  .seed-input {
-  width: 400px !important;
-  }
+
+form {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+} 
+
+form button {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.seed-input {
+  margin: 0% !important;
+  width: 97vw !important;
+  height: 60px !important;
+    margin-right: 0px !important;
+    box-sizing: border-box !important;
+ }
 
   .flower {
-    width: 78vw !important;
-    min-width: 100px;
-    right: -7vw;
-    top: 64%;
-    transform: translateY(-50%);
+    position: absolute;
+  width: 78vw !important;
+  min-width: 100px;
+  right: 0; 
+  max-width: 97vw;
+  top: 45% !important;
+  box-sizing: border-box;
+  overflow: hidden;
+  transform: translateX(-10px) !important;
   }
   .text-container {
     left: 5vw;
@@ -187,7 +238,7 @@ body {
 
   .button-row > button {
     padding: 0.6em 1.5em;
-    border-radius: 13px;
+    border-radius: 8px;
   }
 }
 
@@ -219,7 +270,7 @@ body {
   }
   to {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    
   }
 }
 
