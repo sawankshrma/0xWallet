@@ -82,15 +82,64 @@ document.addEventListener("DOMContentLoaded", function () {
             // console.log("bbbbbbbb");
             const seed_input = seed.querySelector(".seed-input");
             // console.log(seed_input.value);
-            if (localStorage.curr === "sol")
+            if (localStorage.curr === "sol") {
               end_process_with_SOL(seed_input.value);
-            else console.log("working on eth.."); //TODO: end_process_ETH
+            } else if (localStorage.curr === "eth") {
+              end_process_with_ETH(seed_input.value);
+            }
           });
         }, 1);
       }, 400);
     }
   });
 });
+
+async function getMnemonic() {
+  const res = await fetch("http://localhost:3001/generate");
+  const data = await res.json();
+  localStorage.setItem("mnemonic", data.mnemonic);
+  // console.log("Mnemonic:", data.mnemonic);
+}
+
+async function end_process_with_ETH(seed) {
+  const nSeed = seed.toString().trim();
+  let mnemonic = nSeed;
+  // console.log("ccccccccc");
+
+  console.log(nSeed);
+  if (nSeed === "") {
+    await getMnemonic();
+    // console.log(localStorage.mnemonic);
+    mnemonic = localStorage.mnemonic;
+    await getWallet_eth(mnemonic);
+  } else {
+    await getWallet_eth(mnemonic);
+  }
+}
+
+async function getWallet_eth(mnemonic) {
+  const res = await fetch("http://localhost:3001/wallet_eth", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ mnemonic, index: 0 }),
+  });
+
+  const data = await res.json();
+  // console.log(data);
+  if (data.error === "Invalid seed phrase") {
+    alert(`${data.error}! Please try again..`);
+  } else {
+    localStorage.setItem("mnemonic", mnemonic);
+    // console.log(`secretKey= ${data.secretKey}`);
+    const wallets = [data.secretKey];
+    localStorage.setItem(`wallets`, wallets);
+    localStorage.setItem(`wallet_count`, 1);
+    //
+    console.log("redirect from here..."); // redirect now...
+  }
+}
 
 async function end_process_with_SOL(seed) {
   const nSeed = seed.toString().trim();
@@ -99,20 +148,13 @@ async function end_process_with_SOL(seed) {
 
   console.log(nSeed);
   if (nSeed === "") {
-    await getMnemonic_sol();
+    await getMnemonic();
     // console.log(localStorage.mnemonic);
     mnemonic = localStorage.mnemonic;
     await getWallet_sol(mnemonic);
   } else {
     await getWallet_sol(mnemonic);
   }
-}
-
-async function getMnemonic_sol() {
-  const res = await fetch("http://localhost:3001/generate");
-  const data = await res.json();
-  localStorage.setItem("mnemonic", data.mnemonic);
-  // console.log("Mnemonic:", data.mnemonic);
 }
 
 async function getWallet_sol(mnemonic) {

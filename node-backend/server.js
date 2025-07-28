@@ -5,6 +5,7 @@ import { generateMnemonic, mnemonicToSeed, validateMnemonic } from "bip39";
 import { derivePath } from "ed25519-hd-key";
 import nacl from "tweetnacl";
 import { Keypair } from "@solana/web3.js";
+import { Wallet, HDNodeWallet } from "ethers";
 
 const app = express();
 app.use(cors());
@@ -38,10 +39,45 @@ app.post("/wallet", async (req, res) => {
       const secret = nacl.sign.keyPair.fromSeed(derivedSeed).secretKey;
       const keypair = Keypair.fromSecretKey(secret);
 
-      currentIndex += 1;
+      currentIndex = 0;
 
       res.json({
         secretKey: Buffer.from(keypair.secretKey).toString("hex"),
+      });
+    }
+
+    await process_two();
+  } catch (e) {
+    console.error("Wallet generation error:", e); // for debugging
+    res.status(500).json({ error: e.toString() });
+  }
+});
+
+app.post("/wallet_eth", async (req, res) => {
+  try {
+    const { mnemonic, index } = req.body;
+    if (typeof index !== "number" || index < 0) {
+      return res.status(400).json({ error: "Invalid index value" });
+    }
+    currentIndex = index;
+
+    if (!validateMnemonic(mnemonic)) {
+      return res.status(400).json({ error: "Invalid seed phrase" });
+    }
+    const path = `m/44'/60'/${currentIndex}/0`;
+
+    // call the function (and make it async!)
+    async function process_two() {
+      const seed = await mnemonicToSeed(mnemonic);
+      const hdNode = HDNodeWallet.fromSeed(seed);
+      const child = hdNode.derivePath(path);
+      const privateKey = child.privateKey;
+      const wallet = new Wallet(privateKey);
+
+      currentIndex = 0;
+
+      res.json({
+        secretKey: wallet.privateKey,
       });
     }
 
