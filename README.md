@@ -23,7 +23,7 @@ cd web-wallet/node-backend
 npm install
 npm run dev
 ```
-### express server (on 8000)
+### django server (on 8000)
 ```
 cd web-wallet
 pip install -r requirements.txt
